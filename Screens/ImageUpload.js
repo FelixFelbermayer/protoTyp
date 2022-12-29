@@ -1,9 +1,16 @@
 import { storage, db } from "../setup";
-import { Text, Image, View, ActivityIndicator } from "react-native";
+import {
+  Text,
+  Image,
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
 import styled from "styled-components/native";
 import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytes } from "firebase/storage";
 import { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   collection,
   doc,
@@ -16,7 +23,7 @@ import {
 export default ImageUpload = ({ route }) => {
   let eventId = route.params.eventId;
   const [loading, setLoading] = useState(false);
-
+  const navigation = useNavigation();
   const pickImage = async () => {
     console.log("amlk");
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -73,6 +80,12 @@ export default ImageUpload = ({ route }) => {
   return (
     <Container>
       <Header>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ marginTop: 50 }}
+        >
+          <BackImage source={require("../assets/Back.png")} />
+        </TouchableOpacity>
         <View>
           <EventText>Feci's Poolparty</EventText>
         </View>
@@ -86,13 +99,7 @@ export default ImageUpload = ({ route }) => {
         ) : (
           ""
         )}
-        <Image
-          style={{ width: 100, height: 100 }}
-          source={{
-            uri: `http://www.planwallpaper.com/static/images/9-credit-1.jpg`,
-          }}
-        />
-        <BGButton>
+        <BGButton onPress={() => navigation.navigate("Home")}>
           <Text>>>>>></Text>
         </BGButton>
       </CenterView>
@@ -146,4 +153,9 @@ const UploadIcon = styled.TouchableOpacity`
 
 const Header = styled.View`
   height: 10%;
+`;
+const BackImage = styled.Image`
+  width: 17px;
+  height: 17px;
+  margin-left: 30px;
 `;

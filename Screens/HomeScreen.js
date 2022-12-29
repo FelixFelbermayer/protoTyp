@@ -22,15 +22,9 @@ export default function HomeScreen({ navigation }) {
       <HeaderComponent></HeaderComponent>
       <EventText>Eventbilder</EventText>
       <FolderList></FolderList>
-      <Text>he</Text>
       <AbsoluteButtonJoin></AbsoluteButtonJoin>
       <AbsoluteButtonAdd></AbsoluteButtonAdd>
-      <Image
-        style={{ width: 100, height: 100 }}
-        source={{
-          uri: `http://www.planwallpaper.com/static/images/9-credit-1.jpg`,
-        }}
-      />
+      <Text>He</Text>
     </Container>
   );
 }
