@@ -11,9 +11,9 @@ export default function App() {
         onPress={async () => {
           try {
             const docRef = await addDoc(collection(db, "users"), {
-              first: "Ada",
-              last: "Lovelace",
-              born: 1815,
+              first: "Alan",
+              last: "Touring",
+              born: 1912,
             });
             console.log("Document written with ID: ", docRef.id);
           } catch (e) {
