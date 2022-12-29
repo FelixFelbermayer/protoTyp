@@ -1,5 +1,5 @@
 import { storage, db } from "../setup";
-import { Text, View, ActivityIndicator } from "react-native";
+import { Text, Image, View, ActivityIndicator } from "react-native";
 import styled from "styled-components/native";
 import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytes } from "firebase/storage";
@@ -86,6 +86,12 @@ export default ImageUpload = ({ route }) => {
         ) : (
           ""
         )}
+        <Image
+          style={{ width: 100, height: 100 }}
+          source={{
+            uri: `http://www.planwallpaper.com/static/images/9-credit-1.jpg`,
+          }}
+        />
         <BGButton>
           <Text>>>>>></Text>
         </BGButton>
