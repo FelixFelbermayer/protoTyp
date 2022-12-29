@@ -7,7 +7,13 @@ import { useNavigation } from "@react-navigation/native";
 export default function FolderList() {
   const navigation = useNavigation();
   const renderItem = ({ item }) => (
-    <FolderTouch onPress={() => navigation.navigate("Galerie")}>
+    <FolderTouch
+      onPress={() =>
+        navigation.navigate("Galerie", {
+          eventId: "nfzMT6PCewE3RiN8VgTF",
+        })
+      }
+    >
       <EventImage source={item.link} />
     </FolderTouch>
   );

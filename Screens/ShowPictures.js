@@ -11,9 +11,11 @@ import { useNavigation } from "@react-navigation/native";
 import { GalerieImages } from "../Data/Galerie";
 import GalerieList from "../Components/GalerieList";
 import styled from "styled-components/native";
-export default function ShowPictures() {
+export default function ShowPictures({ route }) {
   const navigation = useNavigation();
-
+  let dim = Dimensions.get("window").height - 120;
+  let dimWidth = Dimensions.get("window").width - 110;
+  let eventId = route.params.eventId;
   return (
     <Header>
       <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -21,7 +23,29 @@ export default function ShowPictures() {
       </TouchableOpacity>
       <HeaderText>Citybeats</HeaderText>
       <HeaderTextDate>18. Februar 2022</HeaderTextDate>
-      <GalerieList></GalerieList>
+      <GalerieList eventId={eventId}></GalerieList>
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          top: dim,
+          left: dimWidth,
+          backgroundColor: "orange",
+          borderRadius: 10,
+        }}
+        onPress={() =>
+          navigation.navigate("ImageUpload", {
+            eventId,
+          })
+        }
+      >
+        <Image
+          source={require("../assets/add-image.png")}
+          style={{
+            width: 40,
+            height: 40,
+          }}
+        />
+      </TouchableOpacity>
     </Header>
   );
 }
