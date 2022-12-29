@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AddScreen from "./Screens/AddScreen";
 import JoinScreen from "./Screens/JoinScreen";
+import ImageUpload from "./Screens/ImageUpload";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -26,6 +27,7 @@ export default function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="AddScreen" component={AddScreen} />
         <Stack.Screen name="JoinScreen" component={JoinScreen} />
+        <Stack.Screen name="ImageUpload" component={ImageUpload} />
       </Stack.Navigator>
     </NavigationContainer>
   );

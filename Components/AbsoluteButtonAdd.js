@@ -13,7 +13,11 @@ export default function AbsoluteButtonAdd() {
         top: dim,
         left: dimWidth,
       }}
-      onPress={() => navigation.navigate("AddScreen")}
+      onPress={() =>
+        navigation.navigate("ImageUpload", {
+          eventId: "nfzMT6PCewE3RiN8VgTF",
+        })
+      }
     >
       <Image
         source={require("../assets/Add.png")}
