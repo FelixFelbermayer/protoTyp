@@ -1,25 +1,43 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+  FlatList,
+  Dimensions,
+  TouchableOpacity,
+  Button,
+} from "react-native";
 import styled from "styled-components/native";
+import HeaderComponent from "../Components/HeaderComponent";
+import FolderList from "../Components/FolderList";
+import AbsoluteButtonJoin from "../Components/AbsoluteButtonJoin";
+import AbsoluteButtonAdd from "../Components/AbsoluteButtonAdd";
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <Container>
-      <Header>
-        <View>
-          <Text>Sortieren</Text>
-          <Image></Image>
-        </View>
-      </Header>
+      <HeaderComponent></HeaderComponent>
+      <EventText>Eventbilder</EventText>
+      <FolderList></FolderList>
+      <Text>he</Text>
+      <AbsoluteButtonJoin></AbsoluteButtonJoin>
+
+      <AbsoluteButtonAdd></AbsoluteButtonAdd>
     </Container>
   );
 }
 
-const Container = styled.View`
-  background-color: blue;
+const Container = styled.SafeAreaView`
   height: 100%;
 `;
-const Header = styled.View`
-  height: 10%;
-  background-color: red;
+const EventText = styled.Text`
+  margin-left: 30px;
+  font-size: 30px;
+  font-family: Poppins_600SemiBold;
+  font-weight: bold;
+  color: #454545;
+  margin-top: 10px;
 `;
