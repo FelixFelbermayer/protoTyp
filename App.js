@@ -1,10 +1,37 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import HomeScreen from "./Screens/HomeScreen";
+import { Button, StyleSheet, Text, View } from "react-native";
+import { app, storage, db } from "./setup.js";
+import { collection, addDoc } from "firebase/firestore";
+
 export default function App() {
   return (
-    <SafeAreaView>
-      <HomeScreen></HomeScreen>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Text>Open up App.js to start working on your app!</Text>
+      <Button
+        onPress={async () => {
+          try {
+            const docRef = await addDoc(collection(db, "users"), {
+              first: "Ada",
+              last: "Lovelace",
+              born: 1815,
+            });
+            console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+        }}
+        title="Click"
+      ></Button>
+      <StatusBar style="auto" />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
