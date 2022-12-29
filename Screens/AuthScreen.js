@@ -10,6 +10,7 @@ import {
   TextInputComponent,
   TextInputBase,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import styled from "styled-components/native";
 import { app, storage, db, auth } from "../setup";
@@ -18,11 +19,13 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import LogoutButton from "../Components/LogoutButton";
+import { useNavigation } from "@react-navigation/native";
 
 export default function AuthScreen() {
   const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
 
+  const navigation = useNavigation();
   console.log("current user:", auth.currentUser);
 
   return (
@@ -50,10 +53,13 @@ export default function AuthScreen() {
                 // Signed in navigate
                 const user = userCredential.user;
                 console.log(user);
+                navigation.navigate("Home");
               })
               .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+
+                Alert.alert(error.code, errorMessage);
                 console.log(errorCode, errorMessage);
               });
           }}
@@ -74,6 +80,7 @@ export default function AuthScreen() {
               .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                Alert.alert(error.code, errorMessage);
                 console.log(errorCode, errorMessage);
               });
           }}
@@ -124,7 +131,6 @@ const Container = styled.View`
 const Header = styled.View`
   margin-top: 80px;
   height: 10%;
-  background-color: white;
   display: flex;
 `;
 

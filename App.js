@@ -18,8 +18,8 @@ export default function App() {
     return null;
   }
 
+  const Stack = createNativeStackNavigator();
   if (auth.currentUser) {
-    const Stack = createNativeStackNavigator();
     return (
       <NavigationContainer>
         <Stack.Navigator
@@ -30,11 +30,25 @@ export default function App() {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="AddScreen" component={AddScreen} />
           <Stack.Screen name="JoinScreen" component={JoinScreen} />
+          <Stack.Screen name="AuthScreen" component={AuthScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );
   } else {
-    return <AuthScreen></AuthScreen>;
+    return (
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="AuthScreen" component={AuthScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="AddScreen" component={AddScreen} />
+          <Stack.Screen name="JoinScreen" component={JoinScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
   }
 }
 
