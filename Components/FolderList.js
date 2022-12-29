@@ -1,10 +1,17 @@
 import { StatusBar } from "expo-status-bar";
-import { FlatList } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import { FolderData } from "../Data/Folder";
+import { useNavigation } from "@react-navigation/native";
 
 export default function FolderList() {
-  const renderItem = ({ item }) => <EventImage source={item.link} />;
+  const navigation = useNavigation();
+  const renderItem = ({ item }) => (
+    <FolderTouch onPress={() => navigation.navigate("Galerie")}>
+      <EventImage source={item.link} />
+    </FolderTouch>
+  );
+
   return (
     <FolderView>
       <FlatList
@@ -25,3 +32,4 @@ const FolderView = styled.View`
   margin-left: 30px;
   height: 100%;
 `;
+const FolderTouch = styled.TouchableOpacity``;

@@ -24,14 +24,20 @@ export default function HomeScreen({ navigation }) {
       <FolderList></FolderList>
       <Text>he</Text>
       <AbsoluteButtonJoin></AbsoluteButtonJoin>
-
       <AbsoluteButtonAdd></AbsoluteButtonAdd>
+      <Image
+        style={{ width: 100, height: 100 }}
+        source={{
+          uri: `http://www.planwallpaper.com/static/images/9-credit-1.jpg`,
+        }}
+      />
     </Container>
   );
 }
 
-const Container = styled.SafeAreaView`
+const Container = styled.View`
   height: 100%;
+  margin-top: 12%;
 `;
 const EventText = styled.Text`
   margin-left: 30px;
