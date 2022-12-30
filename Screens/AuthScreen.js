@@ -26,7 +26,6 @@ export default function AuthScreen() {
   const [pw, setPw] = useState("");
 
   const navigation = useNavigation();
-  console.log("current user:", auth.currentUser);
 
   return (
     <Container>
@@ -52,7 +51,6 @@ export default function AuthScreen() {
               .then((userCredential) => {
                 // Signed in navigate
                 const user = userCredential.user;
-                console.log(user);
                 navigation.navigate("Home");
               })
               .catch((error) => {
