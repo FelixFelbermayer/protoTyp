@@ -23,17 +23,29 @@ export default function FolderList() {
       let proms = [];
       let a = (await getDocs(q)).forEach((doc) => {
         let prom = new Promise((resolve, reject) => {
-          getDownloadURL(ref(storage, doc.data().images[0]))
-            .then((url) => {
-              resolve({
-                id: doc.id,
-                link: url,
-                name: doc.data().name,
+          if(doc.data().images.length > 0){
+            getDownloadURL(ref(storage, doc.data().images[0]))
+              .then((url) => {
+                resolve({
+                  id: doc.id,
+                  link: url,
+                  name: doc.data().name,
+                });
+              })
+              .catch((e) => {
+                resolve({
+                  id: doc.id,
+                  link: null,
+                  name: doc.data().name,
+                })
               });
+          }else{
+            resolve({
+              id: doc.id,
+              link: null,
+              name: doc.data().name,
             })
-            .catch((e) => {
-              reject(e);
-            });
+          }
         });
         proms.push(prom);
       });
@@ -58,7 +70,8 @@ export default function FolderList() {
         }
       >
         <Text>{item.name}</Text>
-        <EventImage source={{ uri: item.link }} />
+        
+        <EventImage source={ item.link != null ? { uri: item.link } : require('../assets/Folder.png')} />
       </FolderTouch>
     );
   };
