@@ -13,7 +13,7 @@ export default function AbsoluteButtonJoin() {
         top: dimJoin,
         left: dimWidthJoin,
       }}
-      onPress={() => navigation.navigate("JoinScreen")}
+      onPress={() => navigation.navigate("CreateEventScreen")}
     >
       <Image
         source={require("../assets/Join.png")}

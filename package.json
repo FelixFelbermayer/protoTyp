@@ -25,6 +25,7 @@
     "react-native-image-picker": "^4.10.3",
     "react-native-uuid": "^2.0.1",
     "styled-components": "^5.3.6",
+    "react-native-qrcode-svg": "^6.1.2",
     "expo-file-system": "~15.1.1"
   },
   "devDependencies": {

@@ -14,6 +14,7 @@ import { auth } from "./setup.js";
 import AuthScreen from "./Screens/AuthScreen";
 import ShowPictures from "./Screens/ShowPictures";
 import ImageUpload from "./Screens/ImageUpload";
+import CreateEventScreen from "./Screens/CreateEventScreen";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -40,6 +41,10 @@ export default function App() {
           <Stack.Screen name="AuthScreen" component={AuthScreen} />
           <Stack.Screen name="Galerie" component={ShowPictures} />
           <Stack.Screen name="ImageUpload" component={ImageUpload} />
+          <Stack.Screen
+            name="CreateEventScreen"
+            component={CreateEventScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -57,6 +62,10 @@ export default function App() {
           <Stack.Screen name="JoinScreen" component={JoinScreen} />
           <Stack.Screen name="Galerie" component={ShowPictures} />
           <Stack.Screen name="ImageUpload" component={ImageUpload} />
+          <Stack.Screen
+            name="CreateEventScreen"
+            component={CreateEventScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
