@@ -15,6 +15,7 @@ import AuthScreen from "./Screens/AuthScreen";
 import ShowPictures from "./Screens/ShowPictures";
 import ImageUpload from "./Screens/ImageUpload";
 import CreateEventScreen from "./Screens/CreateEventScreen";
+import CodeScannerScreen from "./Screens/CodeScannerScreen";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -45,6 +46,10 @@ export default function App() {
             name="CreateEventScreen"
             component={CreateEventScreen}
           />
+          <Stack.Screen
+            name="CodeScannerScreen"
+            component={CodeScannerScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
@@ -65,6 +70,10 @@ export default function App() {
           <Stack.Screen
             name="CreateEventScreen"
             component={CreateEventScreen}
+          />
+          <Stack.Screen
+            name="CodeScannerScreen"
+            component={CodeScannerScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

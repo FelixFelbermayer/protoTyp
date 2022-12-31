@@ -26,7 +26,8 @@
     "react-native-uuid": "^2.0.1",
     "styled-components": "^5.3.6",
     "react-native-qrcode-svg": "^6.1.2",
-    "expo-file-system": "~15.1.1"
+    "expo-file-system": "~15.1.1",
+    "expo-barcode-scanner": "~12.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
