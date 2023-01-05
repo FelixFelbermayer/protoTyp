@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { TextInput, Button, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { TextInput, TouchableOpacity, Text, Image } from "react-native";
 import styled from "styled-components/native";
 import { db } from "../setup.js";
 import { collection, addDoc } from "firebase/firestore";
-import ScanButton from "../Components/ScanButton";
 import { useNavigation } from "@react-navigation/native";
 
 export default function eventcreation() {
@@ -17,9 +16,11 @@ export default function eventcreation() {
       try {
         const docRef = await addDoc(collection(db, "events"), {
           name: eventName,
+          members: [],
+          images: [],
         });
         console.log("Document written with ID: ", docRef.id);
-        navigation.navigate("HomeScreen");
+        navigation.navigate("Home");
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -43,15 +44,30 @@ export default function eventcreation() {
             />
           </InputContainer>
           <SubmitButton>
-            <Button title="Create Event" onPress={() => handleSubmit()} />
+            <TouchableOpacity onPress={() => handleSubmit()}>
+              <Text style={{ color: "white" }}>Create Event</Text>
+            </TouchableOpacity>
           </SubmitButton>
         </CreateContainer>
         <SplitLine />
         <JoinContainer>
-          <Button
-            title="Scan Code"
+          <TouchableOpacity
+            style={{
+              position: "relative",
+              top: "35%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
             onPress={() => navigation.navigate("CodeScannerScreen")}
-          />
+          >
+            <Image
+              source={require("../assets/Join.png")}
+              style={{
+                width: 60,
+                height: 60,
+              }}
+            />
+          </TouchableOpacity>
         </JoinContainer>
       </EventCreationContainer>
     </BackGround>
@@ -63,8 +79,7 @@ const BackGround = styled.View`
   height: 100%;
 `;
 const EventCreationContainer = styled.View`
-  background-color: #ededed;
-  margin-top: 12%
+  margin-top: 12%;
   height: 100%;
   flex-directiopn: column;
   align-content: space-between;
@@ -84,6 +99,10 @@ const InputContainer = styled.View`
 `;
 const SubmitButton = styled.View`
   margin: auto;
+  color: white;
+  background-color: #e68d4b;
+  padding: 10px;
+  border-radius: 5px;
 `;
 const BackImage = styled.Image`
   width: 17px;
@@ -92,9 +111,10 @@ const BackImage = styled.Image`
 `;
 const SplitLine = styled.View`
   width: 60%;
-  height: 3px;
-  background-color: #e68d4b;
   margin: auto;
+  border-top-width: 4px;
+  border-top-color: #e68d4b;
+  border-top-style: dotted;
 `;
 const JoinContainer = styled.View`
   height: 40%;

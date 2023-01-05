@@ -35,13 +35,16 @@ export default function AuthScreen() {
       <InputContainer>
         <StyledTextInput
           value={email}
-          onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setEmail(text.trim())}
           placeholder="Email"
+          autoCapitalize="none"
         ></StyledTextInput>
         <StyledTextInput
           value={pw}
           onChangeText={(text) => setPw(text)}
           placeholder="Password"
+          autoCapitalize="none"
+          autoComplete="off"
           secureTextEntry={true}
         ></StyledTextInput>
 
