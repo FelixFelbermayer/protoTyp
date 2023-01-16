@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import { db } from "../setup.js";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
-
+import { auth } from "../setup.js";
 export default function eventcreation() {
   const navigation = useNavigation();
   const [eventName, setEventName] = useState();
@@ -16,7 +16,7 @@ export default function eventcreation() {
       try {
         const docRef = await addDoc(collection(db, "events"), {
           name: eventName,
-          members: [],
+          members: [auth.currentUser.uid],
           images: [],
         });
         console.log("Document written with ID: ", docRef.id);

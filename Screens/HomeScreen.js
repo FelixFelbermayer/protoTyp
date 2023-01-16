@@ -24,7 +24,6 @@ export default function HomeScreen({ navigation }) {
       <FolderList></FolderList>
       <AbsoluteButtonJoin></AbsoluteButtonJoin>
       <AbsoluteButtonAdd></AbsoluteButtonAdd>
-      <Text>He</Text>
     </Container>
   );
 }

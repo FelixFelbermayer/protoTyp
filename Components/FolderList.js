@@ -1,20 +1,19 @@
-import { StatusBar } from "expo-status-bar";
-import { FlatList, TouchableOpacity, Image, Text } from "react-native";
+import { FlatList, Text } from "react-native";
 import styled from "styled-components/native";
-import { FolderData } from "../Data/Folder";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { auth, db, storage } from "../setup";
 import { collection, getDoc, getDocs, query, where } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function FolderList() {
   const navigation = useNavigation();
   const [events, setEvents] = useState([]);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const fetchifetch = async () => {
-      console.log(auth.currentUser.uid);
       let qref = collection(db, "events");
       const q = query(
         qref,
@@ -55,7 +54,7 @@ export default function FolderList() {
     };
 
     fetchifetch();
-  }, []);
+  }, [isFocused]);
 
   console.log({ events });
 
