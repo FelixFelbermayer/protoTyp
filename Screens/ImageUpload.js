@@ -33,14 +33,14 @@ export default ImageUpload = ({ route }) => {
         aspect: [4, 3],
         selectionLimit: 0,
         allowsMultipleSelection: true,
-        quality: 1,
+        quality: 0.1,
         presentationStyle: "fullScreen",
       });
 
-      if (!result.canceled) {
+      console.log(result.selected);
+      if (!result.cancelled) {
         setLoading(true);
-
-        let proms = result.assets.map((e) => {
+        let proms = result.selected.map((e) => {
           return new Promise((resolve, reject) => {
             let url = e.uri;
             let filename = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -48,13 +48,16 @@ export default ImageUpload = ({ route }) => {
               .then((r) => r.blob())
               .then((b) => {
                 let imgref = ref(storage, `${eventId}/${filename}`);
-                uploadBytes(imgref, b).then((sn) => {
-                  let fullpath = sn.metadata.fullPath;
+                uploadBytes(imgref, b)
+                  .then((sn) => {
+                    let fullpath = sn.metadata.fullPath;
 
-                  resolve(fullpath);
-                });
+                    resolve(fullpath);
+                  })
+                  .catch((e) => console.log(e, "asd"));
               })
               .catch((error) => {
+                console.log(error);
                 reject(error);
               });
           });
@@ -105,7 +108,7 @@ export default ImageUpload = ({ route }) => {
           ""
         )}
         <BGButton onPress={() => navigation.navigate("Home")}>
-          <Text>weida</Text>
+          <Text>Zum Fotoalbum</Text>
         </BGButton>
       </CenterView>
     </Container>
