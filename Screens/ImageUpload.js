@@ -26,54 +26,59 @@ export default ImageUpload = ({ route }) => {
   const navigation = useNavigation();
   const pickImage = async () => {
     console.log("amlk");
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [4, 3],
-      selectionLimit: 0,
-      allowsMultipleSelection: true,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setLoading(true);
-
-      let proms = result.assets.map((e) => {
-        return new Promise((resolve, reject) => {
-          let url = e.uri;
-          let filename = url.substring(url.lastIndexOf("/") + 1, url.length);
-          fetch(e.uri)
-            .then((r) => r.blob())
-            .then((b) => {
-              let imgref = ref(storage, `${eventId}/${filename}`);
-              uploadBytes(imgref, b).then((sn) => {
-                let fullpath = sn.metadata.fullPath;
-
-                resolve(fullpath);
-              });
-            })
-            .catch((error) => {
-              reject(error);
-            });
-        });
-        console.log(e);
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: false,
+        aspect: [4, 3],
+        selectionLimit: 0,
+        allowsMultipleSelection: true,
+        quality: 1,
+        presentationStyle: "fullScreen",
       });
 
-      Promise.all(proms)
-        .then(async (results) => {
-          let eventRef = await doc(db, "events", eventId);
-          results.forEach(async (r) => {
-            await updateDoc(eventRef, {
-              images: arrayUnion(r),
-            });
-          });
+      if (!result.canceled) {
+        setLoading(true);
 
-          console.log({ results });
-          setLoading(false);
-        })
-        .catch((errors) => {
-          console.log(errors);
+        let proms = result.assets.map((e) => {
+          return new Promise((resolve, reject) => {
+            let url = e.uri;
+            let filename = url.substring(url.lastIndexOf("/") + 1, url.length);
+            fetch(e.uri)
+              .then((r) => r.blob())
+              .then((b) => {
+                let imgref = ref(storage, `${eventId}/${filename}`);
+                uploadBytes(imgref, b).then((sn) => {
+                  let fullpath = sn.metadata.fullPath;
+
+                  resolve(fullpath);
+                });
+              })
+              .catch((error) => {
+                reject(error);
+              });
+          });
+          console.log(e);
         });
+
+        Promise.all(proms)
+          .then(async (results) => {
+            let eventRef = await doc(db, "events", eventId);
+            results.forEach(async (r) => {
+              await updateDoc(eventRef, {
+                images: arrayUnion(r),
+              });
+            });
+
+            console.log({ results });
+            setLoading(false);
+          })
+          .catch((errors) => {
+            console.log(errors);
+          });
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -100,7 +105,7 @@ export default ImageUpload = ({ route }) => {
           ""
         )}
         <BGButton onPress={() => navigation.navigate("Home")}>
-          <Text>>>>>></Text>
+          <Text>weida</Text>
         </BGButton>
       </CenterView>
     </Container>

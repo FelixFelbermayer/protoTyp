@@ -1,8 +1,4 @@
-import {
-  Image,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { Image, Dimensions, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { GalerieImages } from "../Data/Galerie";
 import GalerieList from "../Components/GalerieList";
@@ -16,13 +12,13 @@ export default function ShowPictures({ route }) {
   let dim = Dimensions.get("window").height - 120;
   let dimWidth = Dimensions.get("window").width - 110;
   let eventId = route.params.eventId;
-  const [event, setEvent]= useState()
+  const [event, setEvent] = useState();
 
   useEffect(() => {
     const fetchImgs = async () => {
       let a = await doc(db, "events", eventId);
       let b = await getDoc(a);
-      let data = await b.data()
+      let data = await b.data();
 
       setEvent(data);
     };
@@ -30,15 +26,17 @@ export default function ShowPictures({ route }) {
     fetchImgs();
   }, [eventId]);
 
-  console.log({event}, "event")
+  console.log({ event }, "event");
 
   return (
     <Header>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <BackImage source={require("../assets/Back.png")} />
       </TouchableOpacity>
-      <HeaderText>{event ? event.name : 'EventName'}</HeaderText>
-      <TouchableOpacity>QR-Code</TouchableOpacity>
+      <HeaderText>{event ? event.name : "EventName"}</HeaderText>
+      <TouchableOpacity>
+        <Text>QR-Code</Text>
+      </TouchableOpacity>
       <HeaderTextDate>18. Februar 2022</HeaderTextDate>
       <GalerieList eventId={eventId}></GalerieList>
       <TouchableOpacity
