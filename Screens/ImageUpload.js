@@ -9,7 +9,7 @@ import {
 import styled from "styled-components/native";
 import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytes } from "firebase/storage";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   collection,
@@ -23,6 +23,21 @@ import {
 export default ImageUpload = ({ route }) => {
   let eventId = route.params.eventId;
   const [loading, setLoading] = useState(false);
+
+  const [event, setEvent] = useState();
+
+  useEffect(() => {
+    const fetchImgs = async () => {
+      let a = await doc(db, "events", eventId);
+      let b = await getDoc(a);
+      let data = await b.data();
+
+      setEvent(data);
+    };
+
+    fetchImgs();
+  }, [eventId]);
+
   const navigation = useNavigation();
   const pickImage = async () => {
     console.log("amlk");
@@ -37,10 +52,12 @@ export default ImageUpload = ({ route }) => {
         presentationStyle: "fullScreen",
       });
 
-      console.log(result.selected);
+      console.log({ selectd: result.selected, result });
       if (!result.cancelled) {
         setLoading(true);
-        let proms = result.selected.map((e) => {
+        let images = result.selected !== undefined ? result.selected : [result];
+        console.log(images);
+        let proms = images.map((e) => {
           return new Promise((resolve, reject) => {
             let url = e.uri;
             let filename = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -85,6 +102,7 @@ export default ImageUpload = ({ route }) => {
     }
   };
 
+  console.log({ event });
   return (
     <Container>
       <Header>
@@ -95,7 +113,7 @@ export default ImageUpload = ({ route }) => {
           <BackImage source={require("../assets/Back.png")} />
         </TouchableOpacity>
         <View>
-          <EventText>Feci's Poolparty</EventText>
+          <EventText>{event.name ? event.name : "Cooles Event"}</EventText>
         </View>
       </Header>
       <CenterView>

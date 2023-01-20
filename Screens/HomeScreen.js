@@ -22,7 +22,6 @@ export default function HomeScreen({ navigation }) {
       <HeaderComponent></HeaderComponent>
       <EventText>Eventbilder</EventText>
       <FolderList></FolderList>
-      <AbsoluteButtonJoin></AbsoluteButtonJoin>
       <AbsoluteButtonAdd></AbsoluteButtonAdd>
     </Container>
   );

@@ -2,8 +2,8 @@ import { Image, Dimensions, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function AbsoluteButtonAdd() {
-  let dim = Dimensions.get("window").height - 120;
-  let dimWidth = Dimensions.get("window").width - 110;
+  let dim = Dimensions.get("window").height - 130;
+  let dimWidth = Dimensions.get("window").width - 60;
   const navigation = useNavigation();
 
   return (
@@ -13,13 +13,13 @@ export default function AbsoluteButtonAdd() {
         top: dim,
         left: dimWidth,
       }}
-      onPress={() => navigation.navigate("AddScreen")}
+      onPress={() => navigation.navigate("CreateEventScreen")}
     >
       <Image
         source={require("../assets/Add.png")}
         style={{
-          width: 40,
-          height: 40,
+          width: 50,
+          height: 50,
         }}
       />
     </TouchableOpacity>
