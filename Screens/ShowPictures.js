@@ -9,8 +9,8 @@ import { getDoc, doc } from "firebase/firestore";
 import { getFreeDiskStorageAsync } from "expo-file-system";
 export default function ShowPictures({ route }) {
   const navigation = useNavigation();
-  let dim = Dimensions.get("window").height - 120;
-  let dimWidth = Dimensions.get("window").width - 110;
+  let dim = Dimensions.get("window").height - 130;
+  let dimWidth = Dimensions.get("window").width - 90;
   let eventId = route.params.eventId;
   let eId = "" + route.params.eventId;
   const [event, setEvent] = useState();
@@ -26,8 +26,6 @@ export default function ShowPictures({ route }) {
 
     fetchImgs();
   }, [eventId]);
-
-  //console.log({ event }, "event");
 
   return (
     <Header>
@@ -46,7 +44,8 @@ export default function ShowPictures({ route }) {
           top: dim,
           left: dimWidth,
           backgroundColor: "orange",
-          borderRadius: 10,
+          borderRadius: 100,
+          padding: 5,
         }}
         onPress={() =>
           navigation.navigate("ImageUpload", {
@@ -55,7 +54,7 @@ export default function ShowPictures({ route }) {
         }
       >
         <Image
-          source={require("../assets/add-image.png")}
+          source={require("../assets/uploadNice.png")}
           style={{
             width: 40,
             height: 40,

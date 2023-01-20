@@ -44,11 +44,11 @@ export default ImageUpload = ({ route }) => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.001,
         allowsEditing: false,
         aspect: [4, 3],
         selectionLimit: 0,
         allowsMultipleSelection: true,
-        quality: 0.1,
         presentationStyle: "fullScreen",
       });
 
@@ -113,7 +113,9 @@ export default ImageUpload = ({ route }) => {
           <BackImage source={require("../assets/Back.png")} />
         </TouchableOpacity>
         <View>
-          <EventText>{event.name ? event.name : "Cooles Event"}</EventText>
+          <EventText>
+            {event !== undefined ? event.name : "Cooles Event"}
+          </EventText>
         </View>
       </Header>
       <CenterView>
