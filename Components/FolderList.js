@@ -22,7 +22,7 @@ export default function FolderList() {
       let proms = [];
       let a = (await getDocs(q)).forEach((doc) => {
         let prom = new Promise((resolve, reject) => {
-          if(doc.data().images.length > 0){
+          if (doc.data().images.length > 0) {
             getDownloadURL(ref(storage, doc.data().images[0]))
               .then((url) => {
                 resolve({
@@ -36,14 +36,14 @@ export default function FolderList() {
                   id: doc.id,
                   link: null,
                   name: doc.data().name,
-                })
+                });
               });
-          }else{
+          } else {
             resolve({
               id: doc.id,
               link: null,
               name: doc.data().name,
-            })
+            });
           }
         });
         proms.push(prom);
@@ -69,8 +69,14 @@ export default function FolderList() {
         }
       >
         <Text>{item.name}</Text>
-        
-        <EventImage source={ item.link != null ? { uri: item.link } : require('../assets/Folder.png')} />
+
+        <EventImage
+          source={
+            item.link != null
+              ? { uri: item.link }
+              : require("../assets/Folder.png")
+          }
+        />
       </FolderTouch>
     );
   };
@@ -91,6 +97,9 @@ export default function FolderList() {
 const EventImage = styled.Image`
   width: 150px;
   height: 150px;
+  border-radius: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
 `;
 
 const FolderView = styled.View`
