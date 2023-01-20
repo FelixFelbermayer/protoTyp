@@ -16,6 +16,7 @@ import ShowPictures from "./Screens/ShowPictures";
 import ImageUpload from "./Screens/ImageUpload";
 import CreateEventScreen from "./Screens/CreateEventScreen";
 import CodeScannerScreen from "./Screens/CodeScannerScreen";
+import QRCode from "./Screens/QRCode";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -42,6 +43,7 @@ export default function App() {
           <Stack.Screen name="AuthScreen" component={AuthScreen} />
           <Stack.Screen name="Galerie" component={ShowPictures} />
           <Stack.Screen name="ImageUpload" component={ImageUpload} />
+          <Stack.Screen name="QRCode" component={QRCode} />
           <Stack.Screen
             name="CreateEventScreen"
             component={CreateEventScreen}
@@ -67,6 +69,7 @@ export default function App() {
           <Stack.Screen name="JoinScreen" component={JoinScreen} />
           <Stack.Screen name="Galerie" component={ShowPictures} />
           <Stack.Screen name="ImageUpload" component={ImageUpload} />
+          <Stack.Screen name="QRCode" component={QRCode} />
           <Stack.Screen
             name="CreateEventScreen"
             component={CreateEventScreen}

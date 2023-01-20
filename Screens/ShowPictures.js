@@ -12,6 +12,7 @@ export default function ShowPictures({ route }) {
   let dim = Dimensions.get("window").height - 120;
   let dimWidth = Dimensions.get("window").width - 110;
   let eventId = route.params.eventId;
+  let eId = "" + route.params.eventId;
   const [event, setEvent] = useState();
 
   useEffect(() => {
@@ -26,16 +27,16 @@ export default function ShowPictures({ route }) {
     fetchImgs();
   }, [eventId]);
 
-  console.log({ event }, "event");
+  //console.log({ event }, "event");
 
   return (
     <Header>
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <BackImage source={require("../assets/Back.png")} />
       </TouchableOpacity>
-      <HeaderText>{event ? event.name : "EventName"}</HeaderText>
-      <TouchableOpacity>
-        <Text>QR-Code</Text>
+      <HeaderText>{event ? event.name : "EventName"} </HeaderText>
+      <TouchableOpacity onPress={() => navigation.navigate("QRCode", { eId })}>
+        <BackImage source={require("../assets/qr-code.png")} />
       </TouchableOpacity>
       <HeaderTextDate>18. Februar 2022</HeaderTextDate>
       <GalerieList eventId={eventId}></GalerieList>
