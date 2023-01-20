@@ -7,7 +7,6 @@ import { getDoc, doc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 
 export default function GalerieList({ eventId }) {
-  console.log({ eventId });
   let [images, setImages] = useState([]);
   useEffect(() => {
     const fetchImgs = async () => {
@@ -28,7 +27,6 @@ export default function GalerieList({ eventId }) {
     fetchImgs();
   }, [eventId]);
 
-  console.log({ images });
   let dimWidth = Dimensions.get("window").width / 3 - 22;
   const renderItem = ({ item }) => (
     <View style={{}}>

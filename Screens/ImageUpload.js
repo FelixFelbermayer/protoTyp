@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 import * as ImagePicker from "expo-image-picker";
-import { ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, uploadBytesResumable } from "firebase/storage";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -40,23 +40,20 @@ export default ImageUpload = ({ route }) => {
 
   const navigation = useNavigation();
   const pickImage = async () => {
-    console.log("amlk");
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        quality: 0.001,
+        quality: 0.1,
         allowsEditing: false,
         aspect: [4, 3],
         selectionLimit: 0,
         allowsMultipleSelection: true,
         presentationStyle: "fullScreen",
       });
-
-      console.log({ selectd: result.selected, result });
       if (!result.cancelled) {
         setLoading(true);
         let images = result.selected !== undefined ? result.selected : [result];
-        console.log(images);
+        console.log({ images });
         let proms = images.map((e) => {
           return new Promise((resolve, reject) => {
             let url = e.uri;
@@ -65,32 +62,42 @@ export default ImageUpload = ({ route }) => {
               .then((r) => r.blob())
               .then((b) => {
                 let imgref = ref(storage, `${eventId}/${filename}`);
-                uploadBytes(imgref, b)
-                  .then((sn) => {
+                console.log("1");
+                try {
+                  // uploadBytes(imgref, b).then((sn) => {
+                  //   let fullpath = sn.metadata.fullPath;
+                  //   console.log("2");
+                  //   resolve(fullpath);
+                  // });
+                  uploadBytesResumable(imgref, b).then((sn) => {
                     let fullpath = sn.metadata.fullPath;
-
+                    console.log("2");
                     resolve(fullpath);
-                  })
-                  .catch((e) => console.log(e, "asd"));
+                  });
+
+                  // .catch((e) => console.log(e, "asd"));
+                } catch (e) {
+                  console.log(e);
+                  console.log("penis");
+                }
               })
               .catch((error) => {
                 console.log(error);
                 reject(error);
               });
           });
-          console.log(e);
         });
 
         Promise.all(proms)
           .then(async (results) => {
             let eventRef = await doc(db, "events", eventId);
             results.forEach(async (r) => {
+              console.log("3");
               await updateDoc(eventRef, {
                 images: arrayUnion(r),
               });
             });
 
-            console.log({ results });
             setLoading(false);
           })
           .catch((errors) => {
@@ -102,7 +109,6 @@ export default ImageUpload = ({ route }) => {
     }
   };
 
-  console.log({ event });
   return (
     <Container>
       <Header>
@@ -127,7 +133,13 @@ export default ImageUpload = ({ route }) => {
         ) : (
           ""
         )}
-        <BGButton onPress={() => navigation.navigate("Home")}>
+        <BGButton
+          onPress={() =>
+            navigation.navigate("Galerie", {
+              eventId,
+            })
+          }
+        >
           <Text>Zum Fotoalbum</Text>
         </BGButton>
       </CenterView>

@@ -56,10 +56,7 @@ export default function FolderList() {
     fetchifetch();
   }, [isFocused]);
 
-  console.log({ events });
-
   const renderItem = ({ item }) => {
-    console.log({ item });
     return (
       <FolderTouch
         onPress={() =>

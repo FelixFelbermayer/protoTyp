@@ -1,4 +1,4 @@
-import { Image, Dimensions, TouchableOpacity, Text } from "react-native";
+import { Image, Dimensions, TouchableOpacity, Text, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { GalerieImages } from "../Data/Galerie";
 import GalerieList from "../Components/GalerieList";
@@ -7,7 +7,17 @@ import { useEffect, useState } from "react";
 import { db } from "../setup";
 import { getDoc, doc } from "firebase/firestore";
 import { getFreeDiskStorageAsync } from "expo-file-system";
+import React from "react";
 export default function ShowPictures({ route }) {
+  //brauchen wir dann um beim go back zu aktualisieren
+  // React.useEffect(() => {
+  //   const focusHandler = navigation.addListener("focus", () => {
+  //     Alert.alert("Refreshed");
+  //   });
+
+  //   return focusHandler;
+  // }, [navigation]);
+
   const navigation = useNavigation();
   let dim = Dimensions.get("window").height - 130;
   let dimWidth = Dimensions.get("window").width - 90;
