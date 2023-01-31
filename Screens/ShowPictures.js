@@ -1,22 +1,74 @@
-import { Image, Dimensions, TouchableOpacity, Text, Alert } from "react-native";
+import { Image, Dimensions, TouchableOpacity, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { GalerieImages } from "../Data/Galerie";
 import GalerieList from "../Components/GalerieList";
 import styled from "styled-components/native";
 import { useEffect, useState } from "react";
-import { db } from "../setup";
-import { getDoc, doc } from "firebase/firestore";
-import { getFreeDiskStorageAsync } from "expo-file-system";
+import { storage, db } from "../setup";
+import { updateDoc, getDoc, arrayUnion, doc } from "firebase/firestore";
+import * as ImagePicker from "expo-image-picker";
 import React from "react";
-export default function ShowPictures({ route }) {
-  //brauchen wir dann um beim go back zu aktualisieren
-  // React.useEffect(() => {
-  //   const focusHandler = navigation.addListener("focus", () => {
-  //     Alert.alert("Refreshed");
-  //   });
+import { ref, uploadBytesResumable } from "firebase/storage";
 
-  //   return focusHandler;
-  // }, [navigation]);
+export default function ShowPictures({ route }) {
+  const pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.1,
+        allowsEditing: false,
+        aspect: [4, 3],
+        selectionLimit: 0,
+        allowsMultipleSelection: true,
+        presentationStyle: "fullScreen",
+        selectionLimit: 3,
+      });
+      if (!result.cancelled) {
+        let images = result.selected !== undefined ? result.selected : [result];
+        let proms = images.map((e) => {
+          return new Promise((resolve, reject) => {
+            let url = e.uri;
+            let filename = url.substring(url.lastIndexOf("/") + 1, url.length);
+            fetch(e.uri)
+              .then((r) => r.blob())
+              .then((b) => {
+                let imgref = ref(storage, `${eventId}/${filename}`);
+
+                try {
+                  uploadBytesResumable(imgref, b).then((sn) => {
+                    let fullpath = sn.metadata.fullPath;
+                    resolve(fullpath);
+                  });
+                } catch (e) {
+                  console.log(e);
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                reject(error);
+              });
+          });
+        });
+
+        Promise.all(proms)
+          .then(async (results) => {
+            let eventRef = await doc(db, "events", eventId);
+            results.forEach(async (r) => {
+              console.log("3");
+              await updateDoc(eventRef, {
+                images: arrayUnion(r),
+              });
+            });
+
+            setToggle(!toggle);
+          })
+          .catch((errors) => {
+            console.log(errors);
+          });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const navigation = useNavigation();
   let dim = Dimensions.get("window").height - 130;
@@ -26,7 +78,7 @@ export default function ShowPictures({ route }) {
   console.log("Penis" + ran);
   let eId = "" + route.params.eventId;
   const [event, setEvent] = useState();
-
+  const [toggle, setToggle] = useState(false);
   useEffect(() => {
     const fetchImgs = async () => {
       let a = await doc(db, "events", eventId);
@@ -49,7 +101,7 @@ export default function ShowPictures({ route }) {
         <BackImage source={require("../assets/qr-code.png")} />
       </TouchableOpacity>
       <HeaderTextDate>18. Februar 2022</HeaderTextDate>
-      <GalerieList eventId={eventId} ran={ran}></GalerieList>
+      <GalerieList eventId={eventId} ran={toggle}></GalerieList>
       <TouchableOpacity
         style={{
           position: "absolute",
@@ -59,11 +111,7 @@ export default function ShowPictures({ route }) {
           borderRadius: 100,
           padding: 5,
         }}
-        onPress={() =>
-          navigation.navigate("ImageUpload", {
-            eventId,
-          })
-        }
+        onPress={() => pickImage()}
       >
         <Image
           source={require("../assets/uploadNice.png")}
