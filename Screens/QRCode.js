@@ -33,7 +33,7 @@ const EventCreationContainer = styled.View`
 const EventMain = styled.View`
   disply: flex;
   flex-directiopn: column;
-  align-content: space around;
+  align-content: space-around;
   height: 80%;
 `;
 
