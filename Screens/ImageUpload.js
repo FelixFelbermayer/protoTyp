@@ -49,6 +49,7 @@ export default ImageUpload = ({ route }) => {
         selectionLimit: 0,
         allowsMultipleSelection: true,
         presentationStyle: "fullScreen",
+        selectionLimit: 3,
       });
       if (!result.cancelled) {
         setLoading(true);
