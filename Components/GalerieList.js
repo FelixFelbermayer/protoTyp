@@ -6,7 +6,7 @@ import { db, storage } from "../setup";
 import { getDoc, doc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 
-export default function GalerieList({ eventId }) {
+export default function GalerieList({ eventId, ran }) {
   let [images, setImages] = useState([]);
   useEffect(() => {
     const fetchImgs = async () => {
@@ -25,7 +25,7 @@ export default function GalerieList({ eventId }) {
     };
 
     fetchImgs();
-  }, [eventId]);
+  }, [eventId, ran]);
 
   let dimWidth = Dimensions.get("window").width / 3 - 22;
   const renderItem = ({ item }) => (

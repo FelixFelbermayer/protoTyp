@@ -26,6 +26,10 @@ export default ImageUpload = ({ route }) => {
 
   const [event, setEvent] = useState();
 
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+  const ran = getRandomInt(1000);
   useEffect(() => {
     const fetchImgs = async () => {
       let a = await doc(db, "events", eventId);
@@ -138,6 +142,7 @@ export default ImageUpload = ({ route }) => {
           onPress={() =>
             navigation.navigate("Galerie", {
               eventId,
+              ran,
             })
           }
         >

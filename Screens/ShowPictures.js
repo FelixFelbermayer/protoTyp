@@ -22,6 +22,8 @@ export default function ShowPictures({ route }) {
   let dim = Dimensions.get("window").height - 130;
   let dimWidth = Dimensions.get("window").width - 90;
   let eventId = route.params.eventId;
+  let ran = route.params.ran;
+  console.log("Penis" + ran);
   let eId = "" + route.params.eventId;
   const [event, setEvent] = useState();
 
@@ -33,9 +35,9 @@ export default function ShowPictures({ route }) {
 
       setEvent(data);
     };
-
+    console.log("jshdkjashda");
     fetchImgs();
-  }, [eventId]);
+  }, [ran]);
 
   return (
     <Header>
@@ -47,7 +49,7 @@ export default function ShowPictures({ route }) {
         <BackImage source={require("../assets/qr-code.png")} />
       </TouchableOpacity>
       <HeaderTextDate>18. Februar 2022</HeaderTextDate>
-      <GalerieList eventId={eventId}></GalerieList>
+      <GalerieList eventId={eventId} ran={ran}></GalerieList>
       <TouchableOpacity
         style={{
           position: "absolute",
